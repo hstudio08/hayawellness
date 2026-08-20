@@ -3,27 +3,21 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/firebase/config";
+import { useAuth } from "@/context/AuthContext";
 
 export default function AdminLogin() {
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const { login } = useAuth();
   const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     setError("");
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // Let the layout's AuthGuard handle the redirect so it's smooth
-    } catch (err: any) {
-      setError(err.message || "Failed to sign in");
-      setIsLoading(false);
+    if (login(password)) {
+      router.push("/admin/dashboard");
+    } else {
+      setError("Invalid password");
     }
   };
 
@@ -40,23 +34,13 @@ export default function AdminLogin() {
 
         <form onSubmit={handleLogin} className="space-y-4">
           {error && <div className="bg-red-50 text-red-500 p-3 rounded-xl text-sm border border-red-100">{error}</div>}
+          
           <div>
-            <label className="block text-sm font-semibold text-emerald-deep mb-2">Email Address</label>
-            <input 
-              type="email" 
-              className="w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-teal"
-              placeholder="admin@hayawellness.com"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-emerald-deep mb-2">Password</label>
+            <label className="block text-sm font-semibold text-emerald-deep mb-2">Access Password</label>
             <input 
               type="password" 
               className="w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-teal"
-              placeholder="••••••••"
+              placeholder="Enter password"
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
@@ -65,10 +49,9 @@ export default function AdminLogin() {
           
           <button 
             type="submit"
-            disabled={isLoading}
-            className="w-full bg-emerald-deep text-white py-3.5 rounded-xl font-semibold hover:bg-emerald-teal transition-colors mt-4 disabled:opacity-70 flex items-center justify-center"
+            className="w-full bg-emerald-deep text-white py-3.5 rounded-xl font-semibold hover:bg-emerald-teal transition-colors mt-4 flex items-center justify-center"
           >
-            {isLoading ? "Signing in..." : "Sign In"}
+            Access Portal
           </button>
         </form>
         

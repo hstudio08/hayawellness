@@ -49,9 +49,13 @@ export interface Appointment {
   patientName: string;
   patientEmail: string;
   patientPhone: string;
+  patientAge?: string;
+  patientGender?: string;
+  patientMessage?: string;
   departmentId: string;
   doctorId?: string;
-  date: string; // ISO string
+  doctorName?: string;
+  date: string; // ISO string or MMM dd, yyyy
   time: string;
   status: 'Pending' | 'Confirmed' | 'Completed' | 'Cancelled';
   createdAt: any;
@@ -61,9 +65,14 @@ export interface Appointment {
 // Doctors
 // ----------------------------------------------------
 export const getDoctors = async (): Promise<Doctor[]> => {
-  const q = query(collection(db, 'doctors'), orderBy('name', 'asc'));
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Doctor));
+  try {
+    const q = query(collection(db, 'doctors'), orderBy('name', 'asc'));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Doctor));
+  } catch (e) {
+    const snapshot = await getDocs(collection(db, 'doctors'));
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Doctor));
+  }
 };
 
 export const addDoctor = async (doctor: Omit<Doctor, 'id'>) => {
@@ -84,9 +93,14 @@ export const deleteDoctor = async (id: string) => {
 // Departments
 // ----------------------------------------------------
 export const getDepartments = async (): Promise<Department[]> => {
-  const q = query(collection(db, 'departments'), orderBy('name', 'asc'));
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Department));
+  try {
+    const q = query(collection(db, 'departments'), orderBy('name', 'asc'));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Department));
+  } catch (e) {
+    const snapshot = await getDocs(collection(db, 'departments'));
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Department));
+  }
 };
 
 export const addDepartment = async (department: Omit<Department, 'id'>) => {
@@ -107,9 +121,22 @@ export const deleteDepartment = async (id: string) => {
 // Appointments
 // ----------------------------------------------------
 export const getAppointments = async (): Promise<Appointment[]> => {
-  const q = query(collection(db, 'appointments'), orderBy('createdAt', 'desc'));
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Appointment));
+  try {
+    const snapshot = await getDocs(collection(db, 'appointments'));
+    const list = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Appointment));
+    return list.sort((a, b) => {
+      const timeA = new Date(a.createdAt || a.date).getTime() || 0;
+      const timeB = new Date(b.createdAt || b.date).getTime() || 0;
+      return timeB - timeA;
+    });
+  } catch (e) {
+    console.error("Error fetching appointments:", e);
+    return [];
+  }
+};
+
+export const addAppointment = async (appointment: Omit<Appointment, 'id'>) => {
+  return await addDoc(collection(db, 'appointments'), appointment);
 };
 
 export const updateAppointmentStatus = async (id: string, status: Appointment['status']) => {

@@ -37,11 +37,11 @@ export default function DepartmentsPage() {
         </p>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 lg:px-8 py-16">
+      <section className="w-full max-w-none px-4 sm:px-8 md:px-16 lg:px-24 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {departments.map((dept) => (
-            <Link key={dept.id} href={`/departments/${dept.slug}`} className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 flex flex-col h-full hover:-translate-y-1">
-              <div className="relative h-48 w-full overflow-hidden bg-gray-100">
+            <Link key={dept.id} href={`/departments/${dept.slug}`} className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-emerald-deep/5 transition-all duration-300 border border-gray-100 flex flex-col h-full hover:-translate-y-2">
+              <div className="relative h-40 w-full overflow-hidden bg-gray-50 border-b border-gray-100">
                 {dept.image ? (
                   <Image 
                     src={dept.image} 
@@ -51,7 +51,7 @@ export default function DepartmentsPage() {
                   />
                 ) : (
                   <div className="w-full h-full bg-emerald-soft flex items-center justify-center text-emerald-teal/30">
-                    <IconRenderer name={dept.icon} className="w-16 h-16" />
+                    <IconRenderer name={dept.icon} className="w-12 h-12" />
                   </div>
                 )}
                 <div className="absolute top-4 right-4 bg-white p-2 rounded-xl shadow-sm group-hover:bg-emerald-teal group-hover:text-white transition-colors">

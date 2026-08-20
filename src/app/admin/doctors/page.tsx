@@ -5,6 +5,29 @@ import { getDoctors, addDoctor, updateDoctor, deleteDoctor, Doctor, getDepartmen
 import { Pencil, Trash2, Plus, X, Image as ImageIcon } from "lucide-react";
 import ImageUpload from "@/components/ui/ImageUpload";
 
+const getStartEndTime = (str: string = "") => {
+  try {
+    if (!str) return { s: '09:00', e: '17:00' };
+    let parts = str.split('-');
+    if (parts.length < 2) return { s: '09:00', e: '17:00' };
+    
+    const to24 = (t: string) => {
+       t = t.trim();
+       let partsT = t.split(' ');
+       let time = partsT[0];
+       let modifier = partsT[1];
+       if(!modifier) return time;
+       let [h, m] = time.split(':').map(Number);
+       if (h === 12) h = modifier.toUpperCase() === 'PM' ? 12 : 0;
+       else if (modifier.toUpperCase() === 'PM') h += 12;
+       return `${h < 10 ? '0'+h : h}:${m < 10 ? '0'+m : m}`;
+    };
+    return { s: to24(parts[0]), e: to24(parts[1]) };
+  } catch(e) {
+    return { s: '09:00', e: '17:00' };
+  }
+};
+
 export default function AdminDoctors() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
@@ -223,6 +246,7 @@ export default function AdminDoctors() {
             </div>
             
             <div className="p-6 overflow-y-auto flex-1 bg-gray-50/50">
+              {(() => { const { s: startTime, e: endTime } = getStartEndTime(formData.timings); return (
               <form id="doctor-form" onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Left Column */}
                 <div className="space-y-5">
@@ -264,6 +288,43 @@ export default function AdminDoctors() {
                       ))}
                     </select>
                   </div>
+
+                  <div className="flex flex-col gap-5">
+                      <div>
+                        <label className="block text-sm font-medium text-emerald-deep mb-1">Max Daily Slots</label>
+                        <input 
+                          type="number" 
+                          required
+                          min="1"
+                          value={formData.slots}
+                          onChange={(e) => setFormData({...formData, slots: parseInt(e.target.value) || 10})}
+                          className="w-full p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-teal focus:ring-1 focus:ring-emerald-teal bg-white"
+                          placeholder="e.g. 10"
+                        />
+                      </div>
+                      <div>
+                        
+                        <label className="block text-sm font-medium text-emerald-deep mb-1">Shift Timings</label>
+                        <div className="flex items-center gap-2">
+                          <input 
+                            type="time" 
+                            required
+                            value={startTime}
+                            onChange={(e) => setFormData({...formData, timings: `${e.target.value} - ${endTime}`})}
+                            className="w-full p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-teal focus:ring-1 focus:ring-emerald-teal bg-white"
+                          />
+                          <span className="text-gray-400 font-medium text-sm px-1">to</span>
+                          <input 
+                            type="time" 
+                            required
+                            value={endTime}
+                            onChange={(e) => setFormData({...formData, timings: `${startTime} - ${e.target.value}`})}
+                            className="w-full p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-teal focus:ring-1 focus:ring-emerald-teal bg-white"
+                          />
+                        </div>
+
+                      </div>
+                    </div>
 
                   <div>
                     <label className="block text-sm font-medium text-emerald-deep mb-1">Years of Experience</label>
@@ -311,7 +372,7 @@ export default function AdminDoctors() {
                   </div>
                 </div>
               </form>
-            </div>
+            ); })()}</div>
             
             <div className="px-6 py-4 border-t border-gray-100 flex justify-end gap-3 bg-white">
               <button 

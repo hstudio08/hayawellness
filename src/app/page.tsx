@@ -175,7 +175,7 @@ export default function Home() {
                   <Image src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=200&auto=format&fit=crop" alt="Doctor" fill className="object-cover" />
                 </div>
                 <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden relative bg-gray-200 group-hover:translate-x-2 transition-transform">
-                  <Image src="https://images.unsplash.com/photo-1594824406936-3a93f1e311f6?q=80&w=200&auto=format&fit=crop" alt="Doctor" fill className="object-cover" />
+                  <Image src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=200&auto=format&fit=crop" alt="Doctor" fill className="object-cover" />
                 </div>
               </div>
               <div className="flex flex-col">
@@ -324,7 +324,7 @@ export default function Home() {
             "DcJHVgKRwPI",
             "DbqMHFzPUhj"
           ].map((id, i) => {
-            const isHiddenMobile = !showAllInsta && i >= 2;
+            const isHiddenMobile = !showAllInsta && i >= 4;
             const isHiddenTotal = !showAllInsta && i >= 4;
             if (isHiddenTotal) return null;
 
@@ -379,22 +379,22 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
             {BLOGS.slice(0, 3).map(blog => (
               <div key={blog.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all hover:-translate-y-1 border border-gray-100 flex flex-col group">
-                <div className="relative h-32 md:h-40 w-full overflow-hidden">
+                <div className="relative h-24 md:h-40 w-full overflow-hidden">
                   <Image src={blog.image} alt={blog.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                   <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10px] font-bold text-emerald-deep shadow-sm">
                     {blog.category}
                   </div>
                 </div>
-                <div className="p-4 md:p-5 flex flex-col flex-1">
+                <div className="p-3 md:p-5 flex flex-col flex-1">
                   <div className="text-[10px] md:text-xs text-text-muted mb-2 flex items-center gap-1.5">
                     <CalendarIcon className="w-3 h-3" />
                     {blog.date}
                   </div>
-                  <h3 className="text-base md:text-lg font-serif text-emerald-deep mb-2 group-hover:text-emerald-teal transition-colors line-clamp-2 leading-snug">{blog.title}</h3>
-                  <p className="text-text-muted text-xs line-clamp-2 mb-4 flex-1">{blog.excerpt}</p>
+                  <h3 className="text-sm md:text-lg font-serif text-emerald-deep mb-2 group-hover:text-emerald-teal transition-colors line-clamp-2 leading-snug">{blog.title}</h3>
+                  <p className="text-text-muted text-[10px] md:text-xs line-clamp-2 mb-4 flex-1">{blog.excerpt}</p>
                   
                   <div className="flex items-center gap-2 pt-3 border-t border-gray-50 mt-auto">
                     <Image src={blog.author.photo} alt={blog.author.name} width={32} height={32} className="rounded-full object-cover shadow-sm border border-gray-100" />

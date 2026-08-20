@@ -4,21 +4,58 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { DEPARTMENTS, DOCTORS } from "@/data/mockData";
+import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import { db } from "@/firebase/config";
 
-// Parse time string like '10:00 AM - 02:00 PM' and generate 30m slots
-function generateTimeSlots(timingStr = '09:00 AM - 05:00 PM', slotsCount = 10) {
+// Parse time string like '10:00 AM - 02:00 PM' or '09:00 - 17:00'
+function parseTime(t: string = ""): number {
+  t = t.trim();
+  let parts = t.split(' ');
+  let time = parts[0];
+  let modifier = parts[1];
+  let [hours, minutes] = time.split(':').map(Number);
+  if (modifier) {
+    if (hours === 12) {
+      hours = modifier.toUpperCase() === 'PM' ? 12 : 0;
+    } else if (modifier.toUpperCase() === 'PM') {
+      hours += 12;
+    }
+  }
+  return hours * 60 + (minutes || 0);
+}
+
+function formatTime(minutes: number): string {
+  let h = Math.floor(minutes / 60);
+  let m = minutes % 60;
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12;
+  h = h ? h : 12; 
+  let mStr = m < 10 ? '0' + m : m;
+  return `${h < 10 ? '0'+h : h}:${mStr} ${ampm}`;
+}
+
+function generateTimeSlots(timingStr: string = '09:00 - 17:00', slotsCount: number = 10): string[] {
   try {
+    if (!timingStr) throw new Error();
     const parts = timingStr.split('-');
     if (parts.length < 2) throw new Error();
+    let startMins = parseTime(parts[0]);
+    let endMins = parseTime(parts[1]);
     
-    // Very naive generator for UI sake
-    return ['09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM'].slice(0, slotsCount) || ['10:00 AM'];
+    let slots = [];
+    let currentMins = startMins;
+    while (currentMins < endMins && slots.length < slotsCount) {
+      slots.push(formatTime(currentMins));
+      currentMins += 30;
+    }
+    return slots.length > 0 ? slots : ['10:00 AM'];
   } catch(e) {
     return ['09:00 AM', '09:30 AM', '10:00 AM'];
   }
 }
-\nimport { addDays, format, isBefore, startOfToday } from "date-fns";
-import { CheckCircle2, ChevronLeft, Calendar as CalendarIcon, Clock, User, Phone, Mail, AlertCircle } from "lucide-react";
+import { getDoctors, getDepartments, addAppointment, Doctor, Department } from "@/firebase/db";
+import { addDays, format, isBefore, startOfToday } from "date-fns";
+import { CheckCircle2, ChevronLeft, Calendar as CalendarIcon, Clock, User, Phone, Mail, AlertCircle, Loader2 } from "lucide-react";
 import clsx from "clsx";
 
 import { IconRenderer } from "@/components/ui/IconRenderer";
@@ -30,39 +67,97 @@ function AppointmentForm() {
   const initialDept = searchParams.get("department");
   const initialDoc = searchParams.get("doctor");
 
+  const [departmentsList, setDepartmentsList] = useState<Department[]>(DEPARTMENTS as unknown as Department[]);
+  const [doctorsList, setDoctorsList] = useState<Doctor[]>(DOCTORS as unknown as Doctor[]);
+  const [loadingData, setLoadingData] = useState(true);
+
   const [step, setStep] = useState(1);
   const [selectedDept, setSelectedDept] = useState<string | null>(initialDept);
   const [selectedDoc, setSelectedDoc] = useState<string | null>(initialDoc);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [bookedSlots, setBookedSlots] = useState<string[]>([]);
+  const [isLoadingSlots, setIsLoadingSlots] = useState(false);
   const [patientDetails, setPatientDetails] = useState({
     name: "", email: "", phone: "", age: "", gender: "Male", message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Load live departments and doctors from Firestore
+  useEffect(() => {
+    async function loadFirebaseData() {
+      try {
+        const [depts, docs] = await Promise.all([getDepartments(), getDoctors()]);
+        if (depts && depts.length > 0) {
+          setDepartmentsList(depts.filter(d => d.isActive !== false));
+        }
+        if (docs && docs.length > 0) {
+          setDoctorsList(docs.filter(d => d.isActive !== false));
+        }
+      } catch (err) {
+        console.error("Error loading doctors/departments from Firebase:", err);
+      } finally {
+        setLoadingData(false);
+      }
+    }
+    loadFirebaseData();
+  }, []);
+
   // If a doctor is passed initially, auto-select their department
   useEffect(() => {
-    if (initialDoc) {
-      const doc = DOCTORS.find(d => d.id === initialDoc);
-      if (doc) {
-        setSelectedDept(doc.departmentId);
-        setSelectedDoc(doc.id);
+    if (initialDoc && doctorsList.length > 0) {
+      const docItem = doctorsList.find(d => d.id === initialDoc || d.slug === initialDoc);
+      if (docItem) {
+        setSelectedDept(docItem.departmentId);
+        setSelectedDoc(docItem.id || docItem.slug);
         setStep(3); // Jump to date selection
       }
     } else if (initialDept) {
       setSelectedDept(initialDept);
       setStep(2); // Jump to doctor selection
     }
-  }, [initialDoc, initialDept]);
+  }, [initialDoc, initialDept, doctorsList]);
 
-  const availableDoctors = selectedDept ? DOCTORS.filter(d => d.departmentId === selectedDept) : DOCTORS;
-  const doctor = selectedDoc ? DOCTORS.find(d => d.id === selectedDoc) : null;
-  const department = selectedDept ? DEPARTMENTS.find(d => d.id === selectedDept) : null;
+  // Load booked slots whenever doctor or date changes
+  useEffect(() => {
+    async function fetchBookedSlots() {
+      if (!selectedDoc || !selectedDate) {
+        setBookedSlots([]);
+        return;
+      }
+      setIsLoadingSlots(true);
+      try {
+        const dateStr = format(selectedDate, "MMM dd, yyyy");
+        const q = query(
+          collection(db, "appointments"),
+          where("doctorId", "==", selectedDoc)
+        );
+        const snapshot = await getDocs(q);
+        const booked = snapshot.docs
+          .map(d => d.data())
+          .filter(a => a.date === dateStr && (a.status === "Pending" || a.status === "Confirmed"))
+          .map(a => a.time as string);
+        setBookedSlots(booked);
+      } catch (e) {
+        console.error("Failed to fetch booked slots:", e);
+        setBookedSlots([]);
+      } finally {
+        setIsLoadingSlots(false);
+      }
+    }
+    fetchBookedSlots();
+  }, [selectedDoc, selectedDate]);
 
-  // Mock available time slots
+  const availableDoctors = selectedDept 
+    ? doctorsList.filter(d => d.departmentId === selectedDept || d.departmentId.toLowerCase() === selectedDept.toLowerCase()) 
+    : doctorsList;
+  const doctor = selectedDoc ? doctorsList.find(d => d.id === selectedDoc || d.slug === selectedDoc) : null;
+  const department = selectedDept ? departmentsList.find(d => d.id === selectedDept || d.slug === selectedDept || d.name.toLowerCase() === selectedDept.toLowerCase()) : null;
+
+  // Generate available time slots based on doctor's timings and slots
   const timeSlots = generateTimeSlots(doctor?.timings, doctor?.slots || 10);
 
-  // Mock next 14 days
+  // Next 14 days
   const today = startOfToday();
   const availableDates = Array.from({ length: 14 }).map((_, i) => addDays(today, i + 1));
 
@@ -70,19 +165,66 @@ function AppointmentForm() {
   const handleBack = () => setStep(s => Math.max(s - 1, 1));
 
   const handleConfirm = async () => {
-    setIsSubmitting(true);
-    // Simulate API call to check for double booking and save
-    await new Promise(r => setTimeout(r, 1500));
-    // Check if slot is taken (Random simulation)
-    if (Math.random() > 0.9) {
-      alert("That time was just booked. Please choose another time.");
-      setStep(4);
-      setIsSubmitting(false);
+    if (!selectedDate || !selectedTime || !selectedDoc) {
+      alert("Please ensure Doctor, Date, and Time are selected.");
       return;
     }
+    if (!patientDetails.name || !patientDetails.phone) {
+      alert("Please fill in your name and phone number.");
+      return;
+    }
+
+    setIsSubmitting(true);
     
-    // Redirect to success
-    router.push(`/appointment/success?ref=HAYA-${Math.floor(100000 + Math.random() * 900000)}&time=${encodeURIComponent(selectedTime)}&date=${selectedDate ? encodeURIComponent(selectedDate.toISOString()) : ''}&doc=${encodeURIComponent(doctor?.name || '')}&dept=${encodeURIComponent(department?.name || '')}&patient=${encodeURIComponent(patientDetails.name)}`);
+    try {
+      const dateStr = format(selectedDate, "MMM dd, yyyy");
+      
+      // Safety check for double booking without complex Firestore composite indexes
+      const qCheck = query(
+        collection(db, "appointments"), 
+        where("doctorId", "==", selectedDoc)
+      );
+      const snapshot = await getDocs(qCheck);
+      const isAlreadyTaken = snapshot.docs.some(d => {
+        const data = d.data();
+        return data.date === dateStr && data.time === selectedTime && (data.status === "Pending" || data.status === "Confirmed");
+      });
+      
+      if (isAlreadyTaken) {
+        alert("This time slot was just booked by another patient. Please select a different time slot.");
+        setStep(4);
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Save appointment directly to Firestore
+      const newAppointment = {
+        patientName: patientDetails.name.trim(),
+        patientEmail: (patientDetails.email || "").trim(),
+        patientPhone: patientDetails.phone.trim(),
+        patientAge: patientDetails.age ? String(patientDetails.age) : "",
+        patientGender: patientDetails.gender || "Male",
+        patientMessage: (patientDetails.message || "").trim(),
+        departmentId: department?.name || selectedDept || "",
+        doctorId: selectedDoc,
+        doctorName: doctor?.name || "Specialist Doctor",
+        date: dateStr,
+        time: selectedTime,
+        status: "Pending" as const,
+        createdAt: new Date().toISOString()
+      };
+
+      await addAppointment(newAppointment);
+
+      // Generate a reference code and route to success page
+      const refCode = `HAYA-${Math.floor(100000 + Math.random() * 900000)}`;
+      router.push(`/appointment/success?ref=${refCode}&time=${encodeURIComponent(selectedTime)}&date=${encodeURIComponent(selectedDate.toISOString())}&doc=${encodeURIComponent(doctor?.name || 'Doctor')}&dept=${encodeURIComponent(department?.name || 'Department')}&patient=${encodeURIComponent(patientDetails.name)}`);
+    } catch(err) {
+      console.error("Booking error:", err);
+      alert("Could not complete booking: " + (err instanceof Error ? err.message : "Please check your network and try again."));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -127,20 +269,20 @@ function AppointmentForm() {
             <h2 className="text-2xl md:text-3xl font-serif text-emerald-deep mb-2">Choose Department</h2>
             <p className="text-sm md:text-base text-text-muted mb-6 md:mb-8">Select the medical specialty you need.</p>
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-              {DEPARTMENTS.map(dept => (
+              {departmentsList.map(dept => (
                 <button
-                  key={dept.id}
-                  onClick={() => { setSelectedDept(dept.id); handleNext(); }}
+                  key={dept.id || dept.slug}
+                  onClick={() => { setSelectedDept(dept.id || dept.slug); handleNext(); }}
                   className={clsx(
                     "p-4 md:p-6 rounded-2xl text-left border transition-all hover:border-emerald-teal/50 group",
-                    selectedDept === dept.id ? "border-emerald-deep bg-emerald-soft/30 shadow-sm" : "border-gray-100 bg-white"
+                    (selectedDept === dept.id || selectedDept === dept.slug) ? "border-emerald-deep bg-emerald-soft/30 shadow-sm" : "border-gray-100 bg-white"
                   )}
                 >
                   <div className="mb-2 md:mb-3">
                     <IconRenderer name={dept.icon} className="w-8 h-8 md:w-10 md:h-10 text-emerald-teal group-hover:scale-110 transition-transform" />
                   </div>
                   <h3 className="font-semibold text-emerald-deep text-sm md:text-base mb-1">{dept.name}</h3>
-                  <p className="text-[11px] md:text-xs text-text-muted leading-tight">{dept.shortDescription}</p>
+                  <p className="text-[11px] md:text-xs text-text-muted leading-tight line-clamp-2">{dept.shortDescription}</p>
                 </button>
               ))}
             </div>
@@ -151,21 +293,27 @@ function AppointmentForm() {
         {step === 2 && (
           <div className="animate-in fade-in slide-in-from-right-4">
             <h2 className="text-2xl md:text-3xl font-serif text-emerald-deep mb-2">Choose Doctor</h2>
-            <p className="text-sm md:text-base text-text-muted mb-6 md:mb-8">Select a specialist from the {department?.name} department.</p>
+            <p className="text-sm md:text-base text-text-muted mb-6 md:mb-8">Select a specialist from the {department?.name || 'chosen'} department.</p>
             
             {availableDoctors.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                 {availableDoctors.map(doc => (
                   <button
-                    key={doc.id}
-                    onClick={() => { setSelectedDoc(doc.id); handleNext(); }}
+                    key={doc.id || doc.slug}
+                    onClick={() => { setSelectedDoc(doc.id || doc.slug); handleNext(); }}
                     className={clsx(
                       "p-3 md:p-4 rounded-xl md:rounded-2xl text-left border transition-all hover:border-emerald-teal/50 flex gap-3 md:gap-4 items-center sm:items-start",
-                      selectedDoc === doc.id ? "border-emerald-deep bg-emerald-soft/30 shadow-sm" : "border-gray-100 bg-white"
+                      (selectedDoc === doc.id || selectedDoc === doc.slug) ? "border-emerald-deep bg-emerald-soft/30 shadow-sm" : "border-gray-100 bg-white"
                     )}
                   >
-                    <div className="relative w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden shrink-0">
-                      <Image src={doc.photo} alt={doc.name} fill className="object-cover" />
+                    <div className="relative w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden shrink-0 bg-emerald-soft">
+                      {doc.photo ? (
+                        <Image src={doc.photo} alt={doc.name} fill className="object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-emerald-deep font-bold text-lg">
+                          {doc.name.charAt(0)}
+                        </div>
+                      )}
                     </div>
                     <div className="flex-1">
                       <h3 className="font-semibold text-emerald-deep text-sm md:text-base">{doc.name}</h3>
@@ -192,7 +340,6 @@ function AppointmentForm() {
             
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-2 md:gap-3">
               {availableDates.map(date => {
-                // Simulate weekends or doctor days off (e.g. Sundays off)
                 const isOff = date.getDay() === 0;
                 return (
                   <button
@@ -219,29 +366,41 @@ function AppointmentForm() {
         {step === 4 && (
           <div className="animate-in fade-in slide-in-from-right-4">
             <h2 className="text-2xl md:text-3xl font-serif text-emerald-deep mb-2">Choose Time</h2>
-            <p className="text-text-muted mb-6 md:mb-8 text-sm md:text-base">Select an available time slot for {selectedDate && format(selectedDate, 'MMMM d, yyyy')}.</p>
+            <p className="text-text-muted mb-6 md:mb-8 text-sm md:text-base">
+              Select an available time slot for {selectedDate && format(selectedDate, 'MMMM d, yyyy')}.
+            </p>
             
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-4">
-              {timeSlots.map(time => {
-                // Randomly disable some slots for demo purposes
-                const isBooked = Math.random() > 0.8;
-                return (
-                  <button
-                    key={time}
-                    disabled={isBooked}
-                    onClick={() => { setSelectedTime(time); handleNext(); }}
-                    className={clsx(
-                      "p-3 md:p-4 rounded-xl md:rounded-2xl text-center border md:border-2 transition-all text-sm md:text-base font-medium flex items-center justify-center gap-2",
-                      isBooked ? "opacity-40 cursor-not-allowed bg-gray-50 border-gray-100 line-through text-gray-500" :
-                      selectedTime === time ? "border-emerald-deep bg-emerald-deep text-white shadow-md" : "border-gray-100 bg-white hover:border-emerald-teal/50 text-emerald-deep"
-                    )}
-                  >
-                    <Clock className="w-4 h-4" />
-                    {time}
-                  </button>
-                )
-              })}
-            </div>
+            {isLoadingSlots ? (
+              <div className="py-12 flex flex-col items-center justify-center text-text-muted gap-2">
+                <Loader2 className="w-6 h-6 animate-spin text-emerald-teal" />
+                <p className="text-sm">Checking live availability...</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-4">
+                {timeSlots.map(time => {
+                  const isBooked = bookedSlots.includes(time);
+                  return (
+                    <button
+                      key={time}
+                      disabled={isBooked}
+                      onClick={() => { setSelectedTime(time); handleNext(); }}
+                      className={clsx(
+                        "p-3 md:p-4 rounded-xl md:rounded-2xl text-center border md:border-2 transition-all text-sm md:text-base font-medium flex items-center justify-center gap-2",
+                        isBooked 
+                          ? "opacity-40 cursor-not-allowed bg-gray-100 border-gray-200 line-through text-gray-400" 
+                          : selectedTime === time 
+                          ? "border-emerald-deep bg-emerald-deep text-white shadow-md" 
+                          : "border-gray-100 bg-white hover:border-emerald-teal/50 text-emerald-deep"
+                      )}
+                    >
+                      <Clock className="w-4 h-4" />
+                      <span>{time}</span>
+                      {isBooked && <span className="text-[10px] uppercase font-bold ml-1 text-red-500 no-underline">(Booked)</span>}
+                    </button>
+                  )
+                })}
+              </div>
+            )}
           </div>
         )}
 

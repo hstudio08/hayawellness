@@ -8,6 +8,10 @@ interface IconRendererProps {
 }
 
 export function IconRenderer({ name, className = "w-6 h-6" }: IconRendererProps) {
+  if (!name || typeof name !== 'string') {
+    return <LucideIcons.Activity className={className} />;
+  }
+
   if (name.startsWith('Gi')) {
     // @ts-ignore
     const Icon = GiIcons[name];

@@ -23,22 +23,22 @@ export function ReviewSection() {
           <h2 className="text-4xl md:text-5xl font-serif text-emerald-deep leading-tight">Hear from our patients</h2>
         </div>
       </div>
-      <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
         {REVIEWS.map((review, idx) => {
           // If not showAll, items beyond index 2 are hidden on mobile.
           // Items beyond index 5 are totally hidden.
-          const isHiddenMobile = !showAll && idx >= 3;
-          const isHiddenTotal = !showAll && idx >= 6;
+          const isHiddenMobile = !showAll && idx >= 4;
+          const isHiddenTotal = !showAll && idx >= 4;
           
           if (isHiddenTotal) return null;
 
           return (
-            <div key={idx} className={`break-inside-avoid bg-white p-6 rounded-3xl shadow-md hover:shadow-xl transition-all border border-emerald-soft/50 flex flex-col justify-between ${isHiddenMobile ? 'hidden md:flex' : 'flex'}`}>
+            <div key={idx} className={`bg-white p-4 md:p-6 rounded-2xl md:rounded-3xl shadow-md hover:shadow-xl transition-all border border-emerald-soft/50 flex flex-col justify-between ${isHiddenMobile ? 'hidden md:flex' : 'flex'}`}>
               <div>
                 <div className="flex gap-1 text-gold-subtle mb-4 text-sm">
                   {[1,2,3,4,5].map(star => <span key={star}>★</span>)}
                 </div>
-                <p className="text-text-muted text-sm italic mb-6 leading-relaxed">"{review.text}"</p>
+                <p className="text-text-muted text-xs md:text-sm italic mb-4 md:mb-6 leading-relaxed">"{review.text}"</p>
               </div>
               <div className="flex items-center gap-3 border-t border-emerald-soft/50 pt-4">
                 <div className="w-10 h-10 bg-emerald-soft text-emerald-teal rounded-full flex items-center justify-center font-bold text-sm border border-emerald-teal/20">
