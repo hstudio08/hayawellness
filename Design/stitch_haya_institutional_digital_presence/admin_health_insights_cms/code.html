@@ -1,0 +1,215 @@
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={theme:{extend:{"colors":{"inverse-primary":"#9fd1c1","surface-dim":"#d9dad8","surface-container-low":"#f3f4f1","secondary-container":"#aef0dc","on-secondary-fixed":"#002019","outline":"#707975","on-tertiary-fixed-variant":"#5a4300","on-tertiary-fixed":"#251a00","secondary-fixed":"#aef0dc","on-error-container":"#93000a","tertiary-fixed-dim":"#e9c266","outline-variant":"#c0c8c4","surface-container-highest":"#e2e3e0","primary-fixed-dim":"#9fd1c1","tertiary-container":"#483500","inverse-surface":"#2e3130","on-primary":"#ffffff","surface-variant":"#e2e3e0","on-surface":"#191c1b","background":"#f9faf7","on-secondary-container":"#2f6f5f","on-background":"#191c1b","surface-container-lowest":"#ffffff","on-primary-container":"#7bac9d","primary-fixed":"#baeddd","on-primary-fixed-variant":"#1e4f43","primary-container":"#0b4035","on-secondary":"#ffffff","surface-tint":"#37675a","tertiary":"#2e2100","on-tertiary-container":"#c19d46","secondary":"#286959","on-secondary-fixed-variant":"#045142","surface-container-high":"#e7e8e6","surface":"#f9faf7","surface-bright":"#f9faf7","error":"#ba1a1a","tertiary-fixed":"#ffdf9a","surface-container":"#edeeec","on-surface-variant":"#404945","primary":"#002920","error-container":"#ffdad6","inverse-on-surface":"#f0f1ef","on-error":"#ffffff","on-tertiary":"#ffffff","on-primary-fixed":"#002019","secondary-fixed-dim":"#93d3c0"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"margin-desktop":"64px","container-max":"1280px","gutter":"32px","margin-mobile":"20px","section-gap":"120px","unit":"8px"},"fontFamily":{"label-md":["Manrope"],"headline-lg-mobile":["Libre Caslon Text"],"display-lg":["Libre Caslon Text"],"caption":["Manrope"],"body-lg":["Manrope"],"headline-md":["Libre Caslon Text"],"body-md":["Manrope"],"headline-lg":["Libre Caslon Text"]},"fontSize":{"label-md":["14px",{"lineHeight":"20px","letterSpacing":"0.05em","fontWeight":"600"}],"headline-lg-mobile":["36px",{"lineHeight":"44px","fontWeight":"400"}],"display-lg":["64px",{"lineHeight":"72px","letterSpacing":"-0.02em","fontWeight":"400"}],"caption":["12px",{"lineHeight":"16px","fontWeight":"500"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"headline-md":["32px",{"lineHeight":"40px","fontWeight":"400"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-lg":["48px",{"lineHeight":"56px","letterSpacing":"-0.01em","fontWeight":"400"}]}}}}</script><link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/></head><body class="bg-background font-body-md text-on-background min-h-screen"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="p-8 pb-4"><div class="flex items-center gap-3 mb-10"><div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center"><span class="material-symbols-outlined text-on-primary">emergency</span></div><div class="flex flex-col"><span class="font-headline-md text-primary leading-none text-[20px] uppercase tracking-wider">Haya</span><span class="font-label-md text-on-secondary-container text-[10px] uppercase tracking-widest">Wellness Admin</span></div></div></div><nav class="flex-1 px-4 overflow-y-auto space-y-1" data-active-classes="bg-secondary-container text-on-secondary-fixed-variant font-bold"><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="overview" href="#"><span class="material-symbols-outlined mr-4">dashboard</span><span class="font-label-md">OVERVIEW</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="appointments" href="#"><span class="material-symbols-outlined mr-4">calendar_today</span><span class="font-label-md">APPOINTMENTS</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="doctors" href="#"><span class="material-symbols-outlined mr-4">medical_services</span><span class="font-label-md">DOCTORS</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="doctor-schedules" href="#"><span class="material-symbols-outlined mr-4">schedule</span><span class="font-label-md">SCHEDULES</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="departments" href="#"><span class="material-symbols-outlined mr-4">lan</span><span class="font-label-md">DEPARTMENTS</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="services" href="#"><span class="material-symbols-outlined mr-4">health_metrics</span><span class="font-label-md">SERVICES</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="patients" href="#"><span class="material-symbols-outlined mr-4">group</span><span class="font-label-md">PATIENTS</span></a><a aria-current="page" class="flex items-center px-4 py-3 rounded-lg transition-all group bg-secondary-container text-on-secondary-fixed-variant font-bold" data-path="blogs" href="#"><span class="material-symbols-outlined mr-4">article</span><span class="font-label-md">BLOGS</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="media" href="#"><span class="material-symbols-outlined mr-4">perm_media</span><span class="font-label-md">MEDIA</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="messages" href="#"><span class="material-symbols-outlined mr-4">mail</span><span class="font-label-md">MESSAGES</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="settings" href="#"><span class="material-symbols-outlined mr-4">settings</span><span class="font-label-md">SETTINGS</span></a></nav></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/80 backdrop-blur-md z-40 flex items-center justify-between px-8 border-b border-outline-variant/30"><div class="flex items-center gap-4 text-on-surface-variant"><span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">search</span><span class="text-sm font-label-md">SYSTEM DASHBOARD</span></div><div class="flex items-center gap-6"><div class="relative flex items-center justify-center p-2 rounded-full hover:bg-surface-container-high transition-colors cursor-pointer"><span class="material-symbols-outlined text-on-surface-variant">notifications</span><div class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full ring-2 ring-surface-container-lowest"></div></div><div class="h-8 w-[1px] bg-outline-variant"></div><div class="flex items-center gap-3 pl-2 group cursor-pointer"><div class="flex flex-col items-end"><span class="text-sm font-label-md text-on-surface">Dr. Sarah Haya</span><span class="text-[11px] font-label-md text-secondary uppercase">Super Admin</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center group-hover:ring-4 group-hover:ring-primary-fixed transition-all"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 pt-16 bg-background relative px-8 py-8"><div class="flex flex-col w-full gap-section-gap">
+<!-- Header Section -->
+<section class="flex flex-col gap-6">
+<div class="flex items-end justify-between w-full">
+<div class="flex flex-col gap-2 max-w-2xl">
+<h1 class="font-display-lg text-display-lg text-on-background">Editorial Desk</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">Manage wellness insights, medical thought leadership, and patient education articles across all clinic departments.</p>
+</div>
+<div class="flex gap-4 items-center">
+<button class="px-6 py-3 bg-surface-container text-on-surface rounded-full font-label-md text-label-md flex items-center gap-2 hover:bg-surface-container-high transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+          FILTERS
+        </button>
+<button class="px-8 py-3 bg-primary text-on-primary rounded-full font-label-md text-label-md flex items-center gap-2 hover:bg-primary-container hover:text-on-primary-container transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5 duration-300">
+<span class="material-symbols-outlined text-[18px]">edit_document</span>
+          WRITE NEW ARTICLE
+        </button>
+</div>
+</div>
+<!-- Metrics Bento Grid -->
+<div class="grid grid-cols-12 gap-6 mt-8">
+<!-- Total Views -->
+<div class="col-span-4 bg-surface-container-lowest p-8 rounded-3xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute -right-12 -top-12 w-40 h-40 bg-secondary-container/30 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+<div class="flex flex-col gap-4 relative z-10">
+<div class="flex justify-between items-start">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Total Readership</span>
+<span class="material-symbols-outlined text-secondary">visibility</span>
+</div>
+<div class="flex items-baseline gap-3">
+<span class="font-display-lg text-display-lg text-on-surface">142.5K</span>
+<span class="font-caption text-caption text-primary flex items-center bg-primary-fixed/30 px-2 py-1 rounded-full"><span class="material-symbols-outlined text-[14px]">arrow_upward</span> 12%</span>
+</div>
+<div class="w-full h-12 mt-2">
+<svg class="w-full h-full text-secondary" fill="none" preserveaspectratio="none" viewbox="0 0 100 30">
+<path d="M0 30 Q10 20 20 25 T40 15 T60 20 T80 5 T100 10 L100 30 Z" fill="currentColor" fill-opacity="0.1"></path>
+<path d="M0 30 Q10 20 20 25 T40 15 T60 20 T80 5 T100 10" stroke="currentColor" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Engagement Rate -->
+<div class="col-span-4 bg-primary p-8 rounded-3xl shadow-md text-on-primary relative overflow-hidden group">
+<div class="absolute -left-16 -bottom-16 w-48 h-48 bg-primary-fixed/20 rounded-full blur-3xl group-hover:translate-x-8 transition-transform duration-700"></div>
+<div class="flex flex-col gap-4 relative z-10">
+<div class="flex justify-between items-start">
+<span class="font-label-md text-label-md text-primary-fixed uppercase tracking-widest">Avg. Engagement</span>
+<span class="material-symbols-outlined text-primary-fixed">favorite</span>
+</div>
+<div class="flex items-baseline gap-3">
+<span class="font-display-lg text-display-lg">8.4%</span>
+<span class="font-caption text-caption text-secondary-container flex items-center"><span class="material-symbols-outlined text-[14px]">arrow_upward</span> 2.1%</span>
+</div>
+<p class="font-body-md text-body-md text-primary-fixed-dim mt-2 opacity-80">Above industry benchmark for medical publications.</p>
+</div>
+</div>
+<!-- Publication Status -->
+<div class="col-span-4 bg-surface-container-lowest p-8 rounded-3xl shadow-sm flex flex-col justify-between">
+<div class="flex justify-between items-start mb-6">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Article Status</span>
+<span class="material-symbols-outlined text-outline">analytics</span>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="font-body-md text-body-md text-on-surface">Published</span>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface">342</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-tertiary-fixed-dim"></div>
+<span class="font-body-md text-body-md text-on-surface">Drafts</span>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface">18</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-outline"></div>
+<span class="font-body-md text-body-md text-on-surface">Scheduled</span>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface">7</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Article List Section -->
+<section class="flex flex-col gap-8">
+<div class="flex justify-between items-end border-b border-outline-variant/30 pb-4">
+<div class="flex gap-8">
+<button class="font-label-md text-label-md text-primary border-b-2 border-primary pb-2 -mb-[18px]">ALL ARTICLES</button>
+<button class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors pb-2 -mb-[18px]">PUBLISHED</button>
+<button class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors pb-2 -mb-[18px]">DRAFTS</button>
+<button class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors pb-2 -mb-[18px]">SCHEDULED</button>
+</div>
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full bg-surface-container py-2 pl-10 pr-4 rounded-full font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary transition-all" placeholder="Search articles..." type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Article Row 1 -->
+<div class="group bg-surface-container-lowest rounded-2xl p-4 pr-8 flex items-center gap-6 shadow-sm hover:shadow-md transition-all cursor-pointer">
+<div class="w-32 h-24 rounded-xl overflow-hidden shrink-0">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A bright, airy modern clinic waiting room with minimalist furniture, large windows letting in soft natural sunlight, and a subtle color palette of warm ivory, deep emerald, and brushed brass. High-key lighting, architectural photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqxvJNv3tWdOkNkMRukHBLPY7JNW28U6fwljJC8ccrfI6OTZm_GzK60uswNWFl1nVxRZS35tsU_DGqNyo2oRt4Ax6LaTJ6BTEqDgGwI4sgdF8u5DA1LMjdo_kCpWgxoTaEiCOPPb3syLt1ny-YF2BXIBwhYUpnJ3MHN4fBOTuIe85vAnTo5fAabBbCkJv9Jv0nT3OYbVcwAtPatJlnXcyoqkE9EYkc5rhjeFiOjm54O36c9jXGExDIlA"/>
+</div>
+<div class="flex-1 flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-3 mb-1">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-fixed-variant rounded-full font-caption text-caption uppercase tracking-wider">Patient Care</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-full font-caption text-caption uppercase tracking-wider flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+              Published
+            </span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface truncate">The Future of Preventative Genomics</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-1">How understanding your genetic predispositions can tailor a highly personalized wellness and preventative care plan.</p>
+</div>
+<div class="flex flex-col items-end gap-1 shrink-0 ml-8 text-right w-40">
+<span class="font-label-md text-label-md text-on-surface-variant">Dr. Emily Chen</span>
+<span class="font-caption text-caption text-outline">Oct 24, 2023</span>
+</div>
+<div class="flex items-center gap-6 ml-8 shrink-0">
+<div class="flex flex-col items-center">
+<span class="font-label-md text-label-md text-on-surface">12.4K</span>
+<span class="font-caption text-caption text-outline">Views</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-label-md text-label-md text-on-surface">4.2%</span>
+<span class="font-caption text-caption text-outline">Eng.</span>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container transition-colors ml-4 text-on-surface-variant group-hover:text-primary">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Article Row 2 -->
+<div class="group bg-surface-container-lowest rounded-2xl p-4 pr-8 flex items-center gap-6 shadow-sm hover:shadow-md transition-all cursor-pointer">
+<div class="w-32 h-24 rounded-xl overflow-hidden shrink-0 bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-[32px]">image</span>
+</div>
+<div class="flex-1 flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-3 mb-1">
+<span class="px-3 py-1 bg-tertiary-fixed-dim/30 text-tertiary-container rounded-full font-caption text-caption uppercase tracking-wider">Nutrition</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-full font-caption text-caption uppercase tracking-wider flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+              Draft
+            </span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface truncate">Micronutrients and Cognitive Longevity</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-1">Exploring the critical link between targeted nutritional supplementation and maintaining brain plasticity as we age.</p>
+</div>
+<div class="flex flex-col items-end gap-1 shrink-0 ml-8 text-right w-40">
+<span class="font-label-md text-label-md text-on-surface-variant">Dr. Marcus Vance</span>
+<span class="font-caption text-caption text-outline">Last edited 2h ago</span>
+</div>
+<div class="flex items-center gap-6 ml-8 shrink-0 opacity-50">
+<div class="flex flex-col items-center">
+<span class="font-label-md text-label-md text-on-surface">--</span>
+<span class="font-caption text-caption text-outline">Views</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-label-md text-label-md text-on-surface">--</span>
+<span class="font-caption text-caption text-outline">Eng.</span>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container transition-colors ml-4 text-on-surface-variant group-hover:text-primary">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Article Row 3 -->
+<div class="group bg-surface-container-lowest rounded-2xl p-4 pr-8 flex items-center gap-6 shadow-sm hover:shadow-md transition-all cursor-pointer">
+<div class="w-32 h-24 rounded-xl overflow-hidden shrink-0">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0" data-alt="Close up of a minimalist, high-end skincare or supplement bottle on a polished stone surface. Soft focus background with subtle green and ivory tones, reflecting a premium medical wellness aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyPCzUVfoBmT2VS1-ffpyYfoGuHav7nC2k-8C4rbd0j-CC-dETVmjVe-46xXjY6ddioY150mh4LJii3v_dcHugoZAeERNpc839Fl9W6D7ftDCjgx0yCzmaJozKtpwvPCiinSQ_FP1pmPEHwsvOI_Nhn1UkMsf4PB56wru-XAAoemnckIlgloau1j70rLDeF4Kyvig-S2lwc_udmYSCqAgGnO4O-r5HuZWV4fBkvwaVcgSnlC3DSnDA7Q"/>
+</div>
+<div class="flex-1 flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-3 mb-1">
+<span class="px-3 py-1 bg-surface-container-highest text-on-surface rounded-full font-caption text-caption uppercase tracking-wider">Dermatology</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-full font-caption text-caption uppercase tracking-wider flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+              Scheduled
+            </span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface truncate">Advanced Peptide Therapies for Skin Integrity</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-1">An clinical overview of how structural peptides promote collagen synthesis and dermal healing post-procedure.</p>
+</div>
+<div class="flex flex-col items-end gap-1 shrink-0 ml-8 text-right w-40">
+<span class="font-label-md text-label-md text-on-surface-variant">Editorial Team</span>
+<span class="font-caption text-caption text-outline">Publishes Nov 01</span>
+</div>
+<div class="flex items-center gap-6 ml-8 shrink-0 opacity-50">
+<div class="flex flex-col items-center">
+<span class="font-label-md text-label-md text-on-surface">--</span>
+<span class="font-caption text-caption text-outline">Views</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-label-md text-label-md text-on-surface">--</span>
+<span class="font-caption text-caption text-outline">Eng.</span>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container transition-colors ml-4 text-on-surface-variant group-hover:text-primary">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-4">
+<button class="px-6 py-2 border border-outline/30 rounded-full font-label-md text-label-md text-on-surface-variant hover:bg-surface-container transition-colors flex items-center gap-2">
+        LOAD MORE ARTICLES
+        <span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+</section>
+</div></main></div></body></html>

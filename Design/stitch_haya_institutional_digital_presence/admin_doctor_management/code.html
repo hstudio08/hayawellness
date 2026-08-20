@@ -1,0 +1,223 @@
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={theme:{extend:{"colors":{"inverse-primary":"#9fd1c1","surface-dim":"#d9dad8","surface-container-low":"#f3f4f1","secondary-container":"#aef0dc","on-secondary-fixed":"#002019","outline":"#707975","on-tertiary-fixed-variant":"#5a4300","on-tertiary-fixed":"#251a00","secondary-fixed":"#aef0dc","on-error-container":"#93000a","tertiary-fixed-dim":"#e9c266","outline-variant":"#c0c8c4","surface-container-highest":"#e2e3e0","primary-fixed-dim":"#9fd1c1","tertiary-container":"#483500","inverse-surface":"#2e3130","on-primary":"#ffffff","surface-variant":"#e2e3e0","on-surface":"#191c1b","background":"#f9faf7","on-secondary-container":"#2f6f5f","on-background":"#191c1b","surface-container-lowest":"#ffffff","on-primary-container":"#7bac9d","primary-fixed":"#baeddd","on-primary-fixed-variant":"#1e4f43","primary-container":"#0b4035","on-secondary":"#ffffff","surface-tint":"#37675a","tertiary":"#2e2100","on-tertiary-container":"#c19d46","secondary":"#286959","on-secondary-fixed-variant":"#045142","surface-container-high":"#e7e8e6","surface":"#f9faf7","surface-bright":"#f9faf7","error":"#ba1a1a","tertiary-fixed":"#ffdf9a","surface-container":"#edeeec","on-surface-variant":"#404945","primary":"#002920","error-container":"#ffdad6","inverse-on-surface":"#f0f1ef","on-error":"#ffffff","on-tertiary":"#ffffff","on-primary-fixed":"#002019","secondary-fixed-dim":"#93d3c0"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"margin-desktop":"64px","container-max":"1280px","gutter":"32px","margin-mobile":"20px","section-gap":"120px","unit":"8px"},"fontFamily":{"label-md":["Manrope"],"headline-lg-mobile":["Libre Caslon Text"],"display-lg":["Libre Caslon Text"],"caption":["Manrope"],"body-lg":["Manrope"],"headline-md":["Libre Caslon Text"],"body-md":["Manrope"],"headline-lg":["Libre Caslon Text"]},"fontSize":{"label-md":["14px",{"lineHeight":"20px","letterSpacing":"0.05em","fontWeight":"600"}],"headline-lg-mobile":["36px",{"lineHeight":"44px","fontWeight":"400"}],"display-lg":["64px",{"lineHeight":"72px","letterSpacing":"-0.02em","fontWeight":"400"}],"caption":["12px",{"lineHeight":"16px","fontWeight":"500"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"headline-md":["32px",{"lineHeight":"40px","fontWeight":"400"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-lg":["48px",{"lineHeight":"56px","letterSpacing":"-0.01em","fontWeight":"400"}]}}}}</script><link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/></head><body class="bg-background font-body-md text-on-background min-h-screen"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="p-8 pb-4"><div class="flex items-center gap-3 mb-10"><div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center"><span class="material-symbols-outlined text-on-primary">emergency</span></div><div class="flex flex-col"><span class="font-headline-md text-primary leading-none text-[20px] uppercase tracking-wider">Haya</span><span class="font-label-md text-on-secondary-container text-[10px] uppercase tracking-widest">Wellness Admin</span></div></div></div><nav class="flex-1 px-4 overflow-y-auto space-y-1" data-active-classes="bg-secondary-container text-on-secondary-fixed-variant font-bold"><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="overview" href="#"><span class="material-symbols-outlined mr-4">dashboard</span><span class="font-label-md">OVERVIEW</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="appointments" href="#"><span class="material-symbols-outlined mr-4">calendar_today</span><span class="font-label-md">APPOINTMENTS</span></a><a aria-current="page" class="flex items-center px-4 py-3 rounded-lg transition-all group bg-secondary-container text-on-secondary-fixed-variant font-bold" data-path="doctors" href="#"><span class="material-symbols-outlined mr-4">medical_services</span><span class="font-label-md">DOCTORS</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="doctor-schedules" href="#"><span class="material-symbols-outlined mr-4">schedule</span><span class="font-label-md">SCHEDULES</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="departments" href="#"><span class="material-symbols-outlined mr-4">lan</span><span class="font-label-md">DEPARTMENTS</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="services" href="#"><span class="material-symbols-outlined mr-4">health_metrics</span><span class="font-label-md">SERVICES</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="patients" href="#"><span class="material-symbols-outlined mr-4">group</span><span class="font-label-md">PATIENTS</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="blogs" href="#"><span class="material-symbols-outlined mr-4">article</span><span class="font-label-md">BLOGS</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="media" href="#"><span class="material-symbols-outlined mr-4">perm_media</span><span class="font-label-md">MEDIA</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="messages" href="#"><span class="material-symbols-outlined mr-4">mail</span><span class="font-label-md">MESSAGES</span></a><a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="settings" href="#"><span class="material-symbols-outlined mr-4">settings</span><span class="font-label-md">SETTINGS</span></a></nav></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/80 backdrop-blur-md z-40 flex items-center justify-between px-8 border-b border-outline-variant/30"><div class="flex items-center gap-4 text-on-surface-variant"><span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">search</span><span class="text-sm font-label-md">SYSTEM DASHBOARD</span></div><div class="flex items-center gap-6"><div class="relative flex items-center justify-center p-2 rounded-full hover:bg-surface-container-high transition-colors cursor-pointer"><span class="material-symbols-outlined text-on-surface-variant">notifications</span><div class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full ring-2 ring-surface-container-lowest"></div></div><div class="h-8 w-[1px] bg-outline-variant"></div><div class="flex items-center gap-3 pl-2 group cursor-pointer"><div class="flex flex-col items-end"><span class="text-sm font-label-md text-on-surface">Dr. Sarah Haya</span><span class="text-[11px] font-label-md text-secondary uppercase">Super Admin</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center group-hover:ring-4 group-hover:ring-primary-fixed transition-all"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 pt-16 bg-background relative px-8 py-8"><div class="flex flex-col w-full">
+<div class="flex justify-between items-end mb-[32px]">
+<div class="flex flex-col gap-2 w-full max-w-[600px]">
+<span class="font-label-md text-label-md text-secondary tracking-widest uppercase mb-2">Medical Roster</span>
+<h1 class="font-display-lg text-display-lg text-on-background">Physician Directory</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-[480px]">Manage clinical staff, review availability, and coordinate department schedules across the wellness facility.</p>
+</div>
+<button class="bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md uppercase px-8 py-4 rounded-full flex items-center gap-2 transition-colors shadow-xl shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">add</span>
+      Add Specialist
+    </button>
+</div>
+<div class="grid grid-cols-12 gap-[32px] mb-[64px]">
+<div class="col-span-4 bg-surface-container-low rounded-3xl p-[32px] flex flex-col justify-between relative overflow-hidden group hover:bg-surface-container transition-colors duration-300 min-h-[240px]">
+<div class="absolute -right-8 -top-8 w-40 h-40 bg-secondary/10 rounded-full blur-3xl group-hover:bg-secondary/20 transition-colors duration-500"></div>
+<div>
+<div class="w-12 h-12 bg-surface-container-highest rounded-2xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">medical_information</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block mb-2">Active Staff</span>
+</div>
+<div>
+<div class="flex items-baseline gap-3">
+<span class="font-display-lg text-display-lg text-on-surface leading-none">42</span>
+<span class="font-label-md text-label-md text-secondary bg-secondary-container px-2 py-1 rounded-full">+3 this month</span>
+</div>
+</div>
+</div>
+<div class="col-span-4 bg-primary text-on-primary rounded-3xl p-[32px] flex flex-col justify-between relative overflow-hidden min-h-[240px]">
+<div class="absolute right-0 bottom-0 opacity-10">
+<svg fill="currentColor" height="200" viewbox="0 0 24 24" width="200">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+</svg>
+</div>
+<div>
+<div class="w-12 h-12 bg-primary-container rounded-2xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary-fixed" style="font-variation-settings: 'FILL' 1;">event_available</span>
+</div>
+<span class="font-label-md text-label-md text-primary-fixed uppercase tracking-wider block mb-2">Currently Available</span>
+</div>
+<div>
+<div class="flex items-baseline gap-3 relative z-10">
+<span class="font-display-lg text-display-lg text-on-primary leading-none">18</span>
+<span class="font-label-md text-label-md text-primary-fixed">On-Call Specialists</span>
+</div>
+</div>
+</div>
+<div class="col-span-4 bg-surface-container-low rounded-3xl p-[32px] flex flex-col justify-between relative overflow-hidden group hover:bg-surface-container transition-colors duration-300 min-h-[240px]">
+<div class="absolute -right-8 -top-8 w-40 h-40 bg-tertiary-fixed-dim/20 rounded-full blur-3xl group-hover:bg-tertiary-fixed-dim/40 transition-colors duration-500"></div>
+<div>
+<div class="w-12 h-12 bg-surface-container-highest rounded-2xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">group</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block mb-2">Total Patients Treated</span>
+</div>
+<div>
+<div class="flex items-baseline gap-3">
+<span class="font-display-lg text-display-lg text-on-surface leading-none">12.4k</span>
+<span class="font-label-md text-label-md text-on-surface-variant">YTD</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-between items-center mb-[32px]">
+<div class="flex gap-4">
+<button class="bg-surface-container-high text-on-surface font-label-md text-label-md px-6 py-3 rounded-full hover:bg-surface-container-highest transition-colors">All Departments</button>
+<button class="text-on-surface-variant font-label-md text-label-md px-6 py-3 rounded-full hover:bg-surface-container transition-colors">Cardiology</button>
+<button class="text-on-surface-variant font-label-md text-label-md px-6 py-3 rounded-full hover:bg-surface-container transition-colors">Neurology</button>
+<button class="text-on-surface-variant font-label-md text-label-md px-6 py-3 rounded-full hover:bg-surface-container transition-colors">Orthopedics</button>
+</div>
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md pl-12 pr-4 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-primary/20 transition-shadow" placeholder="Search doctors..." type="text"/>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="font-label-md text-label-md text-on-surface-variant uppercase py-6 px-8 tracking-wider w-[400px]">Specialist</th>
+<th class="font-label-md text-label-md text-on-surface-variant uppercase py-6 px-8 tracking-wider">Department</th>
+<th class="font-label-md text-label-md text-on-surface-variant uppercase py-6 px-8 tracking-wider">Contact</th>
+<th class="font-label-md text-label-md text-on-surface-variant uppercase py-6 px-8 tracking-wider">Status</th>
+<th class="font-label-md text-label-md text-on-surface-variant uppercase py-6 px-8 tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="bg-surface-container-lowest divide-y divide-surface-container-low">
+<tr class="hover:bg-surface-container/50 transition-colors group">
+<td class="py-6 px-8">
+<div class="flex items-center gap-5">
+<div class="relative">
+<img class="w-14 h-14 rounded-full object-cover shadow-sm" data-alt="Professional headshot of an elegant female doctor in her 40s wearing a crisp white medical coat over a soft emerald blouse. Subtle warm clinic lighting, soft focus background. High end medical aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbTkJtJo8uhU97fVTwA-rGcLxK5DuBojz4OPXwgkDyADy04Z6-XVntQBcEkbkLuYTnKzyRWBSfiJq6aYpAxuFbCuKlwQ0WOw9uu_qrcaPJpY3XWaT8c9z3I5CPE1n02n_32lmGc87CzIBRuX4LVm_aPzpndiuZXf6XFBhdBAeGmNxRAFIvPmITEhrvVWjGt6WMdlq5VdSivcA4hAXsx8AriK4RhAcItMCSHOmRSDrEHW8jJ-ezf7uSaQ"/>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-secondary rounded-full ring-2 ring-surface-container-lowest"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-[20px] text-on-surface leading-snug">Dr. Elena Rostova</span>
+<span class="font-label-md text-label-md text-on-surface-variant">ID: PHY-8492</span>
+</div>
+</div>
+</td>
+<td class="py-6 px-8">
+<span class="font-body-md text-body-md text-on-surface">Cardiology</span>
+</td>
+<td class="py-6 px-8">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">e.rostova@hayawellness.com</span>
+<span class="font-caption text-caption text-on-surface-variant mt-1">+1 (555) 019-2834</span>
+</div>
+</td>
+<td class="py-6 px-8">
+<div class="inline-flex items-center gap-2 bg-secondary-container/50 text-secondary px-3 py-1.5 rounded-full">
+<div class="w-1.5 h-1.5 bg-secondary rounded-full"></div>
+<span class="font-label-md text-[11px] uppercase tracking-wider">Available</span>
+</div>
+</td>
+<td class="py-6 px-8">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="w-10 h-10 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant transition-colors" title="Manage Schedule">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+</button>
+<button class="w-10 h-10 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant transition-colors" title="Edit Profile">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container/50 transition-colors group">
+<td class="py-6 px-8">
+<div class="flex items-center gap-5">
+<div class="relative">
+<img class="w-14 h-14 rounded-full object-cover shadow-sm" data-alt="Professional portrait of a middle-aged male doctor with glasses, wearing a tailored navy suit under a white lab coat. Natural side lighting, minimalist architectural background. Trustworthy and competent appearance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlw9n_VeGZvBXdPOMzKWpLEnazXT4uxEYnul8xe2IvQwIi5nlBneOsEUqMu_Ob5jwPcHfhqKQDLCDiG8HEYFJUz6P_PaGF9BxuYuqK-1_5B7SJqSVA0DCJiRONTt1O8Jo49iAb0QB9iZEJIBp3RXBHW9M5j89qfHFHbaD6hWUZxVSS6XLwDUhBIEXCaGXM3eCNs5nLNPuFfXIV8c7nHnsW03sbGhYTOLKWA0emLvCkWxGWLsKRczZ7kw"/>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-surface-dim rounded-full ring-2 ring-surface-container-lowest"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-[20px] text-on-surface leading-snug">Dr. Marcus Chen</span>
+<span class="font-label-md text-label-md text-on-surface-variant">ID: PHY-1023</span>
+</div>
+</div>
+</td>
+<td class="py-6 px-8">
+<span class="font-body-md text-body-md text-on-surface">Neurology</span>
+</td>
+<td class="py-6 px-8">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">m.chen@hayawellness.com</span>
+<span class="font-caption text-caption text-on-surface-variant mt-1">+1 (555) 018-9921</span>
+</div>
+</td>
+<td class="py-6 px-8">
+<div class="inline-flex items-center gap-2 bg-surface-dim/30 text-on-surface-variant px-3 py-1.5 rounded-full">
+<div class="w-1.5 h-1.5 bg-outline rounded-full"></div>
+<span class="font-label-md text-[11px] uppercase tracking-wider">Off Duty</span>
+</div>
+</td>
+<td class="py-6 px-8">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="w-10 h-10 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant transition-colors" title="Manage Schedule">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+</button>
+<button class="w-10 h-10 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant transition-colors" title="Edit Profile">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container/50 transition-colors group">
+<td class="py-6 px-8">
+<div class="flex items-center gap-5">
+<div class="relative">
+<div class="w-14 h-14 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-headline-md text-[24px]">AS</div>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-error rounded-full ring-2 ring-surface-container-lowest"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-[20px] text-on-surface leading-snug">Dr. Aisha Siddiqui</span>
+<span class="font-label-md text-label-md text-on-surface-variant">ID: PHY-5541</span>
+</div>
+</div>
+</td>
+<td class="py-6 px-8">
+<span class="font-body-md text-body-md text-on-surface">Pediatrics</span>
+</td>
+<td class="py-6 px-8">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">a.siddiqui@hayawellness.com</span>
+<span class="font-caption text-caption text-on-surface-variant mt-1">+1 (555) 012-4458</span>
+</div>
+</td>
+<td class="py-6 px-8">
+<div class="inline-flex items-center gap-2 bg-error-container/50 text-error px-3 py-1.5 rounded-full">
+<div class="w-1.5 h-1.5 bg-error rounded-full"></div>
+<span class="font-label-md text-[11px] uppercase tracking-wider">In Surgery</span>
+</div>
+</td>
+<td class="py-6 px-8">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="w-10 h-10 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant transition-colors" title="Manage Schedule">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+</button>
+<button class="w-10 h-10 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant transition-colors" title="Edit Profile">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="bg-surface-container-low px-8 py-4 flex items-center justify-between border-t border-surface-container-highest">
+<span class="font-caption text-caption text-on-surface-variant">Showing 1 to 3 of 42 entries</span>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-md text-sm">1</button>
+<button class="w-8 h-8 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant font-label-md text-sm transition-colors">2</button>
+<button class="w-8 h-8 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant font-label-md text-sm transition-colors">3</button>
+<button class="w-8 h-8 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

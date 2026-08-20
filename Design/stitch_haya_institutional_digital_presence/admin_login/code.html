@@ -1,0 +1,114 @@
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={theme:{extend:{"colors":{"inverse-primary":"#9fd1c1","surface-dim":"#d9dad8","surface-container-low":"#f3f4f1","secondary-container":"#aef0dc","on-secondary-fixed":"#002019","outline":"#707975","on-tertiary-fixed-variant":"#5a4300","on-tertiary-fixed":"#251a00","secondary-fixed":"#aef0dc","on-error-container":"#93000a","tertiary-fixed-dim":"#e9c266","outline-variant":"#c0c8c4","surface-container-highest":"#e2e3e0","primary-fixed-dim":"#9fd1c1","tertiary-container":"#483500","inverse-surface":"#2e3130","on-primary":"#ffffff","surface-variant":"#e2e3e0","on-surface":"#191c1b","background":"#f9faf7","on-secondary-container":"#2f6f5f","on-background":"#191c1b","surface-container-lowest":"#ffffff","on-primary-container":"#7bac9d","primary-fixed":"#baeddd","on-primary-fixed-variant":"#1e4f43","primary-container":"#0b4035","on-secondary":"#ffffff","surface-tint":"#37675a","tertiary":"#2e2100","on-tertiary-container":"#c19d46","secondary":"#286959","on-secondary-fixed-variant":"#045142","surface-container-high":"#e7e8e6","surface":"#f9faf7","surface-bright":"#f9faf7","error":"#ba1a1a","tertiary-fixed":"#ffdf9a","surface-container":"#edeeec","on-surface-variant":"#404945","primary":"#002920","error-container":"#ffdad6","inverse-on-surface":"#f0f1ef","on-error":"#ffffff","on-tertiary":"#ffffff","on-primary-fixed":"#002019","secondary-fixed-dim":"#93d3c0"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"margin-desktop":"64px","container-max":"1280px","gutter":"32px","margin-mobile":"20px","section-gap":"120px","unit":"8px"},"fontFamily":{"label-md":["Manrope"],"headline-lg-mobile":["Libre Caslon Text"],"display-lg":["Libre Caslon Text"],"caption":["Manrope"],"body-lg":["Manrope"],"headline-md":["Libre Caslon Text"],"body-md":["Manrope"],"headline-lg":["Libre Caslon Text"]},"fontSize":{"label-md":["14px",{"lineHeight":"20px","letterSpacing":"0.05em","fontWeight":"600"}],"headline-lg-mobile":["36px",{"lineHeight":"44px","fontWeight":"400"}],"display-lg":["64px",{"lineHeight":"72px","letterSpacing":"-0.02em","fontWeight":"400"}],"caption":["12px",{"lineHeight":"16px","fontWeight":"500"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"headline-md":["32px",{"lineHeight":"40px","fontWeight":"400"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-lg":["48px",{"lineHeight":"56px","letterSpacing":"-0.01em","fontWeight":"400"}]}}}}</script><link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/></head><body class="bg-surface font-body-md text-on-surface min-h-screen flex items-center justify-center"><main class="w-full max-w-md"><div class="flex flex-col w-full h-full min-h-[819px] items-center justify-center p-gutter">
+<div class="w-full max-w-sm flex flex-col gap-8">
+<!-- Branding Header -->
+<div class="flex flex-col items-center text-center gap-2 mb-4">
+<div class="w-16 h-16 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-lg mb-4">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Admin Portal</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-[240px]">Secure access for authorized clinic personnel only.</p>
+</div>
+<!-- Login Form Container -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-2xl shadow-primary-container/5 relative overflow-hidden">
+<!-- Decorative gradient blob -->
+<div class="absolute -top-24 -right-24 w-48 h-48 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+<form class="flex flex-col gap-6 relative z-10" id="adminLoginForm">
+<!-- Input Group: Email -->
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface uppercase tracking-wider" for="email">Email Address</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">mail</span>
+<input class="w-full bg-surface-container-low text-on-surface font-body-lg text-body-lg rounded-lg pl-12 pr-4 py-3 outline-none border-b-2 border-transparent focus:border-primary focus:bg-surface-container transition-all placeholder:text-outline-variant" id="email" placeholder="name@haya.clinic" required="" type="email"/>
+</div>
+</div>
+<!-- Input Group: Password -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<label class="font-label-md text-label-md text-on-surface uppercase tracking-wider" for="password">Password</label>
+<a class="font-caption text-caption text-primary hover:text-primary-container transition-colors" href="#">Forgot Password?</a>
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock</span>
+<input class="w-full bg-surface-container-low text-on-surface font-body-lg text-body-lg rounded-lg pl-12 pr-12 py-3 outline-none border-b-2 border-transparent focus:border-primary focus:bg-surface-container transition-all placeholder:text-outline-variant" id="password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors focus:outline-none" id="togglePassword" type="button">
+<span class="material-symbols-outlined">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- Input Group: Security Code -->
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface uppercase tracking-wider" for="securityCode">2FA Security Code</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">pin</span>
+<input class="w-full bg-surface-container-low text-on-surface font-body-lg text-body-lg rounded-lg pl-12 pr-4 py-3 outline-none border-b-2 border-transparent focus:border-primary focus:bg-surface-container transition-all placeholder:text-outline-variant text-center tracking-widest" id="securityCode" maxlength="7" placeholder="000-000" required="" type="text"/>
+</div>
+</div>
+<!-- Submit Button -->
+<button class="mt-4 w-full bg-primary text-on-primary font-label-md text-label-md uppercase tracking-widest py-4 rounded-lg hover:bg-primary-container transition-colors flex items-center justify-center gap-2 group shadow-md shadow-primary/20" type="submit">
+<span>Authenticate</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</form>
+</div>
+<!-- Footer Security Notice -->
+<div class="flex items-center justify-center gap-2 opacity-70">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-caption text-caption uppercase tracking-widest">Haya Personnel Only</span>
+</div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Password Toggle
+    const toggleBtn = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const icon = toggleBtn.querySelector('span');
+
+    toggleBtn.addEventListener('click', () => {
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.textContent = 'visibility';
+      } else {
+        passwordInput.type = 'password';
+        icon.textContent = 'visibility_off';
+      }
+    });
+
+    // 2FA Code Formatter (000-000)
+    const codeInput = document.getElementById('securityCode');
+    codeInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+      if (value.length > 3) {
+        value = value.substring(0, 3) + '-' + value.substring(3, 6);
+      }
+      e.target.value = value;
+    });
+
+    // Simulate Form Submit
+    const form = document.getElementById('adminLoginForm');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const submitText = submitBtn.querySelector('span');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Loading state
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
+      submitText.textContent = 'Verifying...';
+      const icon = submitBtn.querySelector('.material-symbols-outlined');
+      icon.textContent = 'autorenew';
+      icon.classList.add('animate-spin');
+
+      // Simulate API call
+      setTimeout(() => {
+        submitText.textContent = 'Access Granted';
+        icon.classList.remove('animate-spin');
+        icon.textContent = 'check_circle';
+        submitBtn.classList.remove('bg-primary');
+        submitBtn.classList.add('bg-secondary');
+      }, 1500);
+    });
+  });
+</script></main></body></html>
