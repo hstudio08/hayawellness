@@ -28,7 +28,7 @@ export default function Footer() {
               <li><Link href="/departments" className="text-sm text-emerald-soft/80 hover:text-white transition-colors">Departments</Link></li>
               <li><Link href="/services" className="text-sm text-emerald-soft/80 hover:text-white transition-colors">Services</Link></li>
               <li><Link href="/doctors" className="text-sm text-emerald-soft/80 hover:text-white transition-colors">Our Doctors</Link></li>
-              <li><Link href="/facilities" className="text-sm text-emerald-soft/80 hover:text-white transition-colors">Facilities</Link></li>
+              <li><Link href="/patient" className="text-sm text-emerald-soft/80 hover:text-white transition-colors">Patient Portal</Link></li>
               <li><Link href="/health" className="text-sm text-emerald-soft/80 hover:text-white transition-colors">Health & Insights</Link></li>
               <li><Link href="/privacy-policy" className="text-sm text-emerald-soft/80 hover:text-white transition-colors">Privacy Policy</Link></li>
             </ul>

@@ -34,6 +34,8 @@ const config: Config = {
       fontFamily: {
         serif: ["var(--font-cormorant-garamond)", "serif"],
         sans: ["var(--font-manrope)", "sans-serif"],
+        fredoka: ["var(--font-fredoka)", "sans-serif"],
+        oswald: ["var(--font-oswald)", "sans-serif"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

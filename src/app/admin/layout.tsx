@@ -9,6 +9,17 @@ import clsx from "clsx";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 
 
+import { Fredoka, Oswald } from "next/font/google";
+
+const fredoka = Fredoka({ 
+  subsets: ["latin"],
+  variable: "--font-fredoka" 
+});
+
+const oswald = Oswald({ 
+  subsets: ["latin"],
+  variable: "--font-oswald" 
+});
 
 function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -44,12 +55,13 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   const navItems = [
     { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
     { name: "Appointments", href: "/admin/appointments", icon: Calendar },
+    { name: "Patients", href: "/admin/patients", icon: Users },
     { name: "Doctors", href: "/admin/doctors", icon: Users },
     { name: "Departments", href: "/admin/departments", icon: Grid },
   ];
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden font-sans">
+    <div className={`flex h-screen bg-gray-50 overflow-hidden font-sans ${fredoka.variable} ${oswald.variable}`}>
       {/* Sidebar */}
       
       {/* Mobile Overlay */}
@@ -73,10 +85,10 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
         </button>
 
         <div className="h-20 flex items-center px-6 border-b border-white/10 gap-3">
-          <div className="relative w-8 h-8 rounded-full bg-white overflow-hidden flex items-center justify-center text-emerald-deep font-bold font-serif">
+          <div className="relative w-8 h-8 rounded-full bg-white overflow-hidden flex items-center justify-center text-emerald-deep font-bold font-fredoka">
             H
           </div>
-          <span className="font-serif text-lg tracking-wide">Admin Portal</span>
+          <span className="font-fredoka text-lg tracking-wide">Admin Portal</span>
         </div>
         
         <nav className="flex-1 py-6 px-4 space-y-1 overflow-y-auto">
@@ -85,7 +97,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
             return (
               <Link key={item.name} href={item.href} onClick={() => setSidebarOpen(false)}
                 className={clsx(
-                  "flex items-center gap-3 px-4 py-3 rounded-xl transition-colors text-sm font-medium",
+                  "flex items-center gap-3 px-4 py-3 rounded-xl transition-colors text-sm font-medium font-oswald",
                   isActive ? "bg-emerald-teal text-white" : "text-emerald-soft/70 hover:bg-white/5 hover:text-white"
                 )}
               >
@@ -119,7 +131,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
             >
               <Menu className="w-6 h-6" />
             </button>
-            <h2 className="text-lg md:text-xl font-semibold text-emerald-deep truncate max-w-[150px] sm:max-w-none">
+            <h2 className="text-lg md:text-xl font-semibold font-fredoka text-emerald-deep truncate max-w-[150px] sm:max-w-none">
               {navItems.find(i => pathname.startsWith(i.href))?.name || "Dashboard"}
             </h2>
           </div>

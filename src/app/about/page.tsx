@@ -57,15 +57,58 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Facilities Showcase */}
+      <section className="bg-ivory-warm py-24">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-sm font-semibold text-emerald-teal uppercase tracking-widest mb-4 block">World-Class Infrastructure</span>
+            <h2 className="text-3xl md:text-5xl font-serif text-emerald-deep mb-6">Our Facilities</h2>
+            <p className="text-text-muted text-lg leading-relaxed">
+              We have designed every inch of Haya Wellness to promote healing and provide the highest standard of modern medical care.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Advanced Imaging Center",
+                desc: "Equipped with latest MRI and CT scanners for rapid, precise diagnostics.",
+                img: "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=800&auto=format&fit=crop"
+              },
+              {
+                name: "Surgical Suites",
+                desc: "Ultra-sterile environments with cutting-edge robotic surgical assistance systems.",
+                img: "https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&w=800&auto=format&fit=crop"
+              },
+              {
+                name: "Recovery Lounges",
+                desc: "Private, serene recovery rooms designed like luxury suites to lower patient anxiety.",
+                img: "https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?q=80&w=800&auto=format&fit=crop"
+              }
+            ].map((fac, i) => (
+              <div key={i} className="bg-white rounded-[2rem] overflow-hidden shadow-lg shadow-emerald-deep/5 border border-gray-100 group">
+                <div className="relative h-64 overflow-hidden">
+                  <Image src={fac.img} alt={fac.name} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                </div>
+                <div className="p-8">
+                  <h3 className="text-xl font-serif text-emerald-deep mb-3">{fac.name}</h3>
+                  <p className="text-text-muted">{fac.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
-      <section className="max-w-4xl mx-auto px-4 text-center">
+      <section className="max-w-4xl mx-auto px-4 py-24 text-center">
         <h2 className="text-3xl font-serif text-emerald-deep mb-6">Experience the difference.</h2>
         <div className="flex flex-wrap justify-center gap-4">
           <Link href="/doctors" className="bg-emerald-deep text-white px-8 py-4 rounded-full text-sm font-semibold uppercase tracking-wide hover:bg-emerald-teal transition-colors">
             Meet Our Doctors
           </Link>
-          <Link href="/facilities" className="bg-white text-emerald-deep border border-emerald-teal/30 px-8 py-4 rounded-full text-sm font-semibold uppercase tracking-wide hover:bg-emerald-soft transition-colors">
-            View Facilities
+          <Link href="/appointment" className="bg-white text-emerald-deep border border-emerald-teal/30 px-8 py-4 rounded-full text-sm font-semibold uppercase tracking-wide hover:bg-emerald-soft transition-colors">
+            Book Appointment
           </Link>
         </div>
       </section>

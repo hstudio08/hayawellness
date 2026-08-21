@@ -53,9 +53,11 @@ function generateTimeSlots(timingStr: string = '09:00 - 17:00', slotsCount: numb
     return ['09:00 AM', '09:30 AM', '10:00 AM'];
   }
 }
-import { getDoctors, getDepartments, addAppointment, Doctor, Department } from "@/firebase/db";
+import { getDoctors, getDepartments, addAppointment, getAppointmentsByEmail, Doctor, Department } from "@/firebase/db";
 import { addDays, format, isBefore, startOfToday } from "date-fns";
 import { CheckCircle2, ChevronLeft, Calendar as CalendarIcon, Clock, User, Phone, Mail, AlertCircle, Loader2 } from "lucide-react";
+import { auth } from "@/firebase/config";
+import { onAuthStateChanged, User as FirebaseUser } from "firebase/auth";
 import clsx from "clsx";
 
 import { IconRenderer } from "@/components/ui/IconRenderer";
@@ -72,6 +74,7 @@ function AppointmentForm() {
   const [loadingData, setLoadingData] = useState(true);
 
   const [step, setStep] = useState(1);
+  const [currentUser, setCurrentUser] = useState<FirebaseUser | null>(null);
   const [selectedDept, setSelectedDept] = useState<string | null>(initialDept);
   const [selectedDoc, setSelectedDoc] = useState<string | null>(initialDoc);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -83,6 +86,28 @@ function AppointmentForm() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, async u => {
+      setCurrentUser(u);
+      if (u && u.email) {
+        setPatientDetails(prev => ({ ...prev, email: u.email! }));
+        try {
+          const apts = await getAppointmentsByEmail(u.email);
+          if (apts.length > 0) {
+            apts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            setPatientDetails(prev => ({
+              ...prev,
+              phone: apts[0].patientPhone || prev.phone,
+              name: apts[0].patientName || prev.name
+            }));
+          }
+        } catch (e) {
+          console.error("Failed to load previous booking details for autofill", e);
+        }
+      }
+    });
+    return () => unsub();
+  }, []);
   // Load live departments and doctors from Firestore
   useEffect(() => {
     async function loadFirebaseData() {
@@ -214,11 +239,10 @@ function AppointmentForm() {
         createdAt: new Date().toISOString()
       };
 
-      await addAppointment(newAppointment);
+      const docRef = await addAppointment(newAppointment);
 
-      // Generate a reference code and route to success page
-      const refCode = `HAYA-${Math.floor(100000 + Math.random() * 900000)}`;
-      router.push(`/appointment/success?ref=${refCode}&time=${encodeURIComponent(selectedTime)}&date=${encodeURIComponent(selectedDate.toISOString())}&doc=${encodeURIComponent(doctor?.name || 'Doctor')}&dept=${encodeURIComponent(department?.name || 'Department')}&patient=${encodeURIComponent(patientDetails.name)}`);
+      // Route to success page with actual appointment ID
+      router.push(`/appointment/success?id=${docRef.id}`);
     } catch(err) {
       console.error("Booking error:", err);
       alert("Could not complete booking: " + (err instanceof Error ? err.message : "Please check your network and try again."));
@@ -269,22 +293,32 @@ function AppointmentForm() {
             <h2 className="text-2xl md:text-3xl font-serif text-emerald-deep mb-2">Choose Department</h2>
             <p className="text-sm md:text-base text-text-muted mb-6 md:mb-8">Select the medical specialty you need.</p>
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-              {departmentsList.map(dept => (
-                <button
-                  key={dept.id || dept.slug}
-                  onClick={() => { setSelectedDept(dept.id || dept.slug); handleNext(); }}
-                  className={clsx(
-                    "p-4 md:p-6 rounded-2xl text-left border transition-all hover:border-emerald-teal/50 group",
-                    (selectedDept === dept.id || selectedDept === dept.slug) ? "border-emerald-deep bg-emerald-soft/30 shadow-sm" : "border-gray-100 bg-white"
-                  )}
-                >
-                  <div className="mb-2 md:mb-3">
-                    <IconRenderer name={dept.icon} className="w-8 h-8 md:w-10 md:h-10 text-emerald-teal group-hover:scale-110 transition-transform" />
+              {loadingData ? (
+                Array.from({length: 6}).map((_, i) => (
+                  <div key={i} className="p-4 md:p-6 rounded-2xl border border-gray-100 bg-gray-50/50 animate-pulse">
+                    <div className="w-10 h-10 bg-gray-200 rounded-lg mb-3"></div>
+                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                    <div className="h-3 bg-gray-200 rounded w-full"></div>
                   </div>
-                  <h3 className="font-semibold text-emerald-deep text-sm md:text-base mb-1">{dept.name}</h3>
-                  <p className="text-[11px] md:text-xs text-text-muted leading-tight line-clamp-2">{dept.shortDescription}</p>
-                </button>
-              ))}
+                ))
+              ) : (
+                departmentsList.map(dept => (
+                  <button
+                    key={dept.id || dept.slug}
+                    onClick={() => { setSelectedDept(dept.id || dept.slug); handleNext(); }}
+                    className={clsx(
+                      "p-4 md:p-6 rounded-2xl text-left border transition-all hover:border-emerald-teal/50 group",
+                      (selectedDept === dept.id || selectedDept === dept.slug) ? "border-emerald-deep bg-emerald-soft/30 shadow-sm" : "border-gray-100 bg-white"
+                    )}
+                  >
+                    <div className="mb-2 md:mb-3">
+                      <IconRenderer name={dept.icon} className="w-8 h-8 md:w-10 md:h-10 text-emerald-teal group-hover:scale-110 transition-transform" />
+                    </div>
+                    <h3 className="font-semibold text-emerald-deep text-sm md:text-base mb-1">{dept.name}</h3>
+                    <p className="text-[11px] md:text-xs text-text-muted leading-tight line-clamp-2">{dept.shortDescription}</p>
+                  </button>
+                ))
+              )}
             </div>
           </div>
         )}
@@ -295,7 +329,20 @@ function AppointmentForm() {
             <h2 className="text-2xl md:text-3xl font-serif text-emerald-deep mb-2">Choose Doctor</h2>
             <p className="text-sm md:text-base text-text-muted mb-6 md:mb-8">Select a specialist from the {department?.name || 'chosen'} department.</p>
             
-            {availableDoctors.length > 0 ? (
+            {loadingData ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                {Array.from({length: 4}).map((_, i) => (
+                  <div key={i} className="p-3 md:p-4 rounded-xl md:rounded-2xl border border-gray-100 bg-gray-50/50 flex gap-3 md:gap-4 animate-pulse">
+                    <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gray-200 shrink-0"></div>
+                    <div className="flex-1 py-1">
+                      <div className="h-4 bg-gray-200 rounded w-2/3 mb-2"></div>
+                      <div className="h-3 bg-gray-200 rounded w-1/2 mb-2"></div>
+                      <div className="h-2 bg-gray-200 rounded w-1/3"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : availableDoctors.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                 {availableDoctors.map(doc => (
                   <button
@@ -421,26 +468,27 @@ function AppointmentForm() {
                   onChange={e => setPatientDetails({...patientDetails, name: e.target.value})}
                 />
               </div>
-              <div>
-                <label className="block text-sm font-semibold text-emerald-deep mb-2">Phone Number</label>
-                <input 
-                  type="tel" 
-                  className="w-full p-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-teal"
-                  placeholder="7889XXXXX"
-                  value={patientDetails.phone}
-                  onChange={e => setPatientDetails({...patientDetails, phone: e.target.value})}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-emerald-deep mb-2">Email Address</label>
-                <input 
-                  type="email" 
-                  className="w-full p-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-teal"
-                  placeholder="xyz@gmail.com"
-                  value={patientDetails.email}
-                  onChange={e => setPatientDetails({...patientDetails, email: e.target.value})}
-                />
-              </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-emerald-deep mb-2">Phone Number</label>
+                    <input 
+                      type="tel" 
+                      className="w-full p-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-teal"
+                      placeholder="7889XXXXX"
+                      value={patientDetails.phone}
+                      onChange={e => setPatientDetails({...patientDetails, phone: e.target.value})}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-emerald-deep mb-2">Email Address</label>
+                    <input 
+                      type="email" 
+                      className="w-full p-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-teal disabled:bg-gray-100 disabled:text-gray-500"
+                      placeholder="xyz@gmail.com"
+                      value={patientDetails.email}
+                      disabled={!!currentUser}
+                      onChange={e => setPatientDetails({...patientDetails, email: e.target.value})}
+                    />
+                  </div>
               <div className="flex gap-4">
                 <div className="flex-1">
                   <label className="block text-sm font-semibold text-emerald-deep mb-2">Age</label>
